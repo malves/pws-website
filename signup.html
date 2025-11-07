@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription Annonceur - Powerspace</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- RemixIcon -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container">
+            <div class="header-wrapper">
+                <a href="index.html" class="logo">
+                    <img src="logo_black.png" alt="Powerspace" class="logo-img">
+                </a>
+                
+                <nav class="header-nav">
+                    <ul>
+                        <li><a href="index.html#solutions">Solutions</a></li>
+                        <li><a href="index.html#avantages">Avantages</a></li>
+                        <li><a href="index.html#fonctionnalites">Fonctionnalités</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="auth-main">
+        <div class="auth-container">
+            <div class="auth-box auth-box-large">
+                <h1 class="auth-title">Créer votre compte annonceur</h1>
+                <p class="auth-subtitle">Commencez à diffuser vos campagnes sur +350 newsletters premium</p>
+                
+                <form class="auth-form" id="signupForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">Prénom*</label>
+                            <input 
+                                type="text" 
+                                id="firstName" 
+                                name="firstName" 
+                                placeholder="Votre prénom" 
+                                required
+                            >
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="lastName">Nom*</label>
+                            <input 
+                                type="text" 
+                                id="lastName" 
+                                name="lastName" 
+                                placeholder="Votre nom" 
+                                required
+                            >
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Adresse email professionnelle*</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            placeholder="vous@entreprise.com" 
+                            required
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="company">Nom de l'entreprise*</label>
+                        <input 
+                            type="text" 
+                            id="company" 
+                            name="company" 
+                            placeholder="Votre entreprise" 
+                            required
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Téléphone*</label>
+                        <input 
+                            type="tel" 
+                            id="phone" 
+                            name="phone" 
+                            placeholder="+33 6 12 34 56 78" 
+                            required
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Mot de passe*</label>
+                        <div class="password-input-wrapper">
+                            <input 
+                                type="password" 
+                                id="password" 
+                                name="password" 
+                                placeholder="••••••••" 
+                                required
+                                minlength="8"
+                            >
+                            <button type="button" class="toggle-password" id="togglePassword">
+                                <i class="ri-eye-line"></i>
+                            </button>
+                        </div>
+                        <small class="form-hint">Minimum 8 caractères</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirmer le mot de passe*</label>
+                        <div class="password-input-wrapper">
+                            <input 
+                                type="password" 
+                                id="confirmPassword" 
+                                name="confirmPassword" 
+                                placeholder="••••••••" 
+                                required
+                                minlength="8"
+                            >
+                            <button type="button" class="toggle-password" id="toggleConfirmPassword">
+                                <i class="ri-eye-line"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="budget">Budget mensuel estimé</label>
+                        <select id="budget" name="budget">
+                            <option value="">Sélectionnez une fourchette</option>
+                            <option value="0-5000">0 - 5 000 €</option>
+                            <option value="5000-10000">5 000 - 10 000 €</option>
+                            <option value="10000-25000">10 000 - 25 000 €</option>
+                            <option value="25000-50000">25 000 - 50 000 €</option>
+                            <option value="50000+">50 000 € et plus</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-checkbox">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="terms" required>
+                            <span>J'accepte les <a href="#">conditions générales d'utilisation</a> et la <a href="#">politique de confidentialité</a></span>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <span>Créer mon compte</span>
+                        <span>Créer mon compte</span>
+                    </button>
+                </form>
+                
+                <div class="auth-footer">
+                    <p>Des questions ? <a href="index.html#contact" class="signup-link">Contactez-nous</a></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="auth.js"></script>
+</body>
+</html>

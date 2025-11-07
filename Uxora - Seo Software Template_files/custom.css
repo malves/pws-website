@@ -1,0 +1,124 @@
+.scrolling {
+  animation: fadeInDown 0.9s 1;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 5px 2px rgb(0 0 0 / 10%);
+  background: rgba(255, 255, 255, 0.8);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99;
+}
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateZ(0);
+  }
+}
+
+.scrolling.header-light {
+  background: rgba(1, 25, 255, 0.95);
+}
+
+.scrolling.header-dark {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.swiper-wrapper {
+  transition-timing-function: linear;
+}
+
+@keyframes bounce-smooth {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  25% {
+    transform: translateY(20px);
+  }
+  75% {
+    transform: translateY(-20px);
+  }
+}
+
+.animate-bounce-smooth {
+  animation: bounce-smooth 3s linear infinite;
+  will-change: transform; /* hint for smoother GPU rendering */
+}
+
+@keyframes bounce-reverse-smooth {
+  0%,
+  100% {
+    transform: translateY(20px);
+  }
+  25% {
+    transform: translateY(-20px);
+  }
+  75% {
+    transform: translateY(20px);
+  }
+}
+
+.animate-bounce-reverse-smooth {
+  animation: bounce-reverse-smooth 3s linear infinite;
+  will-change: transform; /* hint for smoother GPU rendering */
+}
+
+@keyframes zoom-smooth {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(0.9);
+  }
+  75% {
+    transform: scale(1);
+  }
+}
+
+.animate-zoom-smooth {
+  animation: zoom-smooth 5s linear infinite;
+  will-change: transform; /* hint for smoother GPU rendering */
+}
+
+@keyframes vertical-top {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+.animate-vertical-top {
+  backface-visibility: hidden;
+  animation: vertical-top 5s linear 0s infinite backwards;
+  will-change: transform; /* hint for smoother GPU rendering */
+}
+
+@keyframes vertical-bottom {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+.animate-vertical-bottom {
+  backface-visibility: hidden;
+  animation: vertical-bottom 5s linear 0s infinite backwards;
+  will-change: transform; /* hint for smoother GPU rendering */
+}
+
+.scene {
+  perspective: 1000px; /* gives depth for rotateX */
+  place-items: center;
+}

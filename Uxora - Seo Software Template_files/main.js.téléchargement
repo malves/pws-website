@@ -1,0 +1,349 @@
+"use strict";
+
+/* ::::::::::::::::::::
+:: GLobal Javascript ::
+::::::::::::::::::::::: */
+
+// ==== Sticky Menu ====
+window.addEventListener("scroll", function () {
+  let header = document.querySelector("header");
+  header.classList.toggle("scrolling", window.scrollY > 0);
+});
+
+//  ==== Use Image as Background by data-bg Attribute ====
+document.querySelectorAll("[data-bg]").forEach((element) => {
+  const bgUrl = element.getAttribute("data-bg");
+
+  // Validation: If no value or empty string, skip it
+  if (!bgUrl || bgUrl.trim() === "") {
+    return; // No error, just skip this element
+  }
+
+  // If a valid URL exists, set the background image
+  element.style.backgroundImage = `url('${bgUrl}')`;
+});
+
+// ==== Pricing Toggle Button ====
+function toggleSwitch() {
+  var month = document.querySelectorAll(".month");
+  var annual = document.querySelectorAll(".annual");
+  for (var i = 0; i < month.length; i++) {
+    if (document.getElementById("toggle").checked == true) {
+      month[i].classList.add("hidden");
+      annual[i].classList.remove("hidden");
+    } else {
+      month[i].classList.remove("hidden");
+      annual[i].classList.add("hidden");
+    }
+  }
+}
+
+// =========== Accordion =============
+document.querySelectorAll(".accordion").forEach(function (accordion) {
+  const accordionName = accordion.getAttribute("data-accordion");
+
+  // Open the first item by default, but only for the first accordion with this data-accordion value
+  if (
+    !document.querySelector(
+      `.accordion[data-accordion="${accordionName}"].processed`,
+    )
+  ) {
+    let firstItem = accordion.querySelector(".accordion-item");
+    if (firstItem) {
+      firstItem.classList.add("active");
+      const body = firstItem.querySelector(".accordion-body");
+      body.style.height = "auto";
+    }
+    accordion.classList.add("processed");
+  }
+
+  accordion.addEventListener("click", function (e) {
+    if (e.target.classList.contains("accordion-header")) {
+      const clickedItem = e.target.closest(".accordion-item");
+      const isActive = clickedItem.classList.contains("active");
+
+      // If the clicked item is already active, do nothing
+      if (isActive) {
+        return;
+      }
+
+      // Close all items in ALL accordions with the same data-accordion value
+      document
+        .querySelectorAll(
+          `.accordion[data-accordion="${accordionName}"] .accordion-item`,
+        )
+        .forEach(function (item) {
+          item.classList.remove("active");
+          const body = item.querySelector(".accordion-body");
+          body.style.height = "0";
+        });
+
+      // Open the clicked item
+      clickedItem.classList.add("active");
+      const body = clickedItem.querySelector(".accordion-body");
+      body.style.height = body.scrollHeight + "px";
+    }
+  });
+});
+
+// =========== Tab =============
+document.querySelectorAll(".tab-group").forEach(function (tabGroup) {
+  const menuLinks = tabGroup.querySelectorAll(".tab-menu button");
+  const contents = tabGroup.querySelectorAll(".tab-content");
+
+  // Activate the first tab by default
+  if (menuLinks.length > 0) {
+    menuLinks[0].classList.add("active");
+    const firstTab = menuLinks[0].getAttribute("data-tab");
+    contents.forEach(function (content) {
+      content.classList.toggle(
+        "active",
+        content.getAttribute("data-tab-content") === firstTab,
+      );
+    });
+  }
+
+  menuLinks.forEach(function (link) {
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+      const tabValue = this.getAttribute("data-tab");
+
+      // Remove active from all links
+      menuLinks.forEach((l) => l.classList.remove("active"));
+
+      // Fade out all contents
+      contents.forEach((c) => {
+        c.classList.remove("active");
+      });
+
+      // Activate current link
+      this.classList.add("active");
+
+      // Fade in selected tab (with reflow trick for smoother animation)
+      const target = tabGroup.querySelector(
+        '.tab-content[data-tab-content="' + tabValue + '"]',
+      );
+      requestAnimationFrame(() => {
+        target.classList.add("active");
+      });
+    });
+  });
+});
+
+// =========== Portfolio Filter =============
+if (document.querySelector(".portfolio-list")) {
+  var portfolioFilter = new Isotope(".portfolio-list", {
+    itemSelector: ".portfolio-item",
+    layoutMode: "masonry",
+  });
+  // Filter on button click
+  var buttons = document.querySelectorAll(".button-group button");
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      // Filter items
+      var filterValue = button.getAttribute("data-filter");
+      portfolioFilter.arrange({ filter: filterValue });
+
+      // Remove 'active' class from all buttons
+      buttons.forEach((btn) => btn.classList.remove("active"));
+
+      // Add 'active' class to clicked button
+      button.classList.add("active");
+    });
+  });
+}
+
+/* :::::::::::::::::::::::::
+::   Template Javascript   ::
+:::::::::::::::::::::::::::: */
+// =========== Client Logo Slider =============
+const clientSlider = new Swiper(".client-slider", {
+  slidesPerView: 2,
+  loop: true,
+  speed: 3000,
+  spaceBetween: 100,
+  autoplay: {
+    delay: 1,
+    disableOnInteraction: false,
+  },
+  breakpoints: {
+    576: {
+      slidesPerView: 3,
+    },
+    768: {
+      slidesPerView: 3,
+    },
+    992: {
+      slidesPerView: 4,
+    },
+    1200: {
+      slidesPerView: 5,
+    },
+  },
+});
+// =========== Vertical Infinite Slider =============
+const verticalSlider = new Swiper(".vertical-infinite-slide", {
+  slidesPerView: 2,
+  direction: "vertical",
+  spaceBetween: 16,
+  loop: true,
+  speed: 3000,
+  autoplay: {
+    delay: 1,
+    disableOnInteraction: false,
+  },
+
+  breakpoints: {
+    576: {
+      slidesPerView: 2,
+    },
+    768: {
+      slidesPerView: 3,
+    },
+  },
+});
+// =========== V1 Project Infinite Slider =============
+const projectSliderV1 = new Swiper(".project-infinite-slide-v1", {
+  slidesPerView: 1,
+  spaceBetween: 24,
+  loop: true,
+  speed: 5000,
+  autoplay: {
+    delay: 1,
+    disableOnInteraction: false,
+    pauseOnMouseEnter: true,
+  },
+
+  breakpoints: {
+    576: {
+      slidesPerView: 1,
+    },
+    768: {
+      slidesPerView: 1.5,
+    },
+    992: {
+      slidesPerView: 2,
+    },
+    1200: {
+      slidesPerView: 2,
+    },
+    1600: {
+      slidesPerView: 3,
+    },
+  },
+});
+// =========== V1 Project Infinite Slider =============
+const projectReverseSliderV1 = new Swiper(
+  ".project-infinite-reverse-slide-v1",
+  {
+    slidesPerView: 1,
+    spaceBetween: 24,
+    loop: true,
+    speed: 5000,
+    autoplay: {
+      reverseDirection: true,
+      delay: 1,
+      disableOnInteraction: false,
+      pauseOnMouseEnter: true,
+    },
+
+    breakpoints: {
+      576: {
+        slidesPerView: 1,
+      },
+      768: {
+        slidesPerView: 1.5,
+      },
+      992: {
+        slidesPerView: 2,
+      },
+      1200: {
+        slidesPerView: 2,
+      },
+      1600: {
+        slidesPerView: 3,
+      },
+    },
+  },
+);
+
+// =========== Testimonial Slider =============
+const testimonialSliderV1 = new Swiper(".testimonial-slider-v1", {
+  slidesPerView: 1,
+  loop: true,
+  speed: 1000,
+  spaceBetween: 24,
+  effect: "fade",
+  fadeEffect: {
+    crossFade: true,
+  },
+  // Navigation arrows
+  navigation: {
+    nextEl: ".testimonial-button-next",
+    prevEl: ".testimonial-button-prev",
+  },
+});
+
+const testimonialSliderV2 = new Swiper(".testimonial-slider-v2", {
+  slidesPerView: 1,
+  loop: true,
+  speed: 3000,
+  spaceBetween: 24,
+  autoplay: {
+    delay: 1,
+    disableOnInteraction: false,
+  },
+  breakpoints: {
+    768: {
+      slidesPerView: 2,
+    },
+    992: {
+      slidesPerView: 2,
+    },
+    1200: {
+      slidesPerView: 3,
+    },
+    1600: {
+      slidesPerView: 4,
+    },
+  },
+});
+
+const testimonialSliderV3 = new Swiper(".testimonial-slider-v3", {
+  slidesPerView: 1,
+  loop: true,
+  speed: 1000,
+  spaceBetween: 24,
+  effect: "fade",
+  fadeEffect: {
+    crossFade: true,
+  },
+  // Navigation arrows
+  navigation: {
+    nextEl: ".testimonial-button-next",
+    prevEl: ".testimonial-button-prev",
+  },
+});
+
+const testimonialSliderV4 = new Swiper(".testimonial-slider-v4", {
+  slidesPerView: 1,
+  loop: true,
+  speed: 500,
+  spaceBetween: 24,
+  breakpoints: {
+    768: {
+      slidesPerView: 2,
+    },
+    992: {
+      slidesPerView: 2,
+    },
+    1200: {
+      slidesPerView: 3,
+    },
+  },
+  // Navigation arrows
+  navigation: {
+    nextEl: ".testimonial-button-next",
+    prevEl: ".testimonial-button-prev",
+  },
+});

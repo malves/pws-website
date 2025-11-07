@@ -1,0 +1,179 @@
+gsap.registerPlugin(ScrollTrigger, SplitText);
+// Initialize GSAP and SplitText
+document.addEventListener("DOMContentLoaded", () => {
+  // Select all elements with the .section-title class
+  const titles = document.querySelectorAll(".section-title");
+
+  // Loop through each title and create an animation
+  titles.forEach((title) => {
+    // Split the text into characters
+    const splitText = new SplitText(title, { type: "words,chars" });
+    const chars = splitText.chars;
+
+    // Set initial state for each character
+    gsap.set(chars, { x: 50, autoAlpha: 0, filter: "blur(0px)" }); // Use autoAlpha instead of opacity
+
+    // Create the animation timeline with ScrollTrigger
+    gsap
+      .timeline({
+        scrollTrigger: {
+          trigger: title, // Trigger animation when this title comes into view
+          start: "top 90%", // Start animation when the top of the title reaches 80% of the viewport
+          end: "bottom 20%", // End animation when the bottom of the title reaches 20% of the viewport
+          once: true, // Play the animation only once
+        },
+      })
+      .to(chars, {
+        x: 0, // Move characters to their original position
+        autoAlpha: 1, // Fade in characters using autoAlpha
+        duration: 1, // Duration of the animation
+        stagger: 0.03, // Stagger the animation for each character
+      });
+  });
+});
+
+// Image Tilt (only run if element exists)
+if (document.querySelector(".tilt-img")) {
+  gsap.fromTo(
+    ".tilt-img",
+    {
+      rotateX: 10,
+      scale: 0.9,
+      autoAlpha: 0.8,
+      transformOrigin: "center center",
+    },
+    {
+      rotateX: 0,
+      scale: 1,
+      autoAlpha: 1,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: ".tilt-img",
+        start: "top 80%",
+        end: "top 30%",
+        scrub: true, // smooth progress tied to scroll. Set to false to just play.
+        // markers: true // uncomment to debug
+      },
+    },
+  );
+}
+
+const items = gsap.utils.toArray(".card");
+
+items.forEach((item, index) => {
+  let tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: item,
+      start: "top top+=" + item.getAttribute("data-animation-item"),
+      endTrigger: ".card-animate-end",
+      end: "top 260",
+      pin: true,
+      pinSpacing: false,
+      scrub: true,
+    },
+  });
+  tl.to(item, {
+    y: 40,
+    opacity: 1,
+    scale: 0.85 + 0.02 * index,
+    transformOrigin: "top center",
+  });
+});
+
+// GSAP Scroll Trigger Custom Animation
+
+// Function to apply animation if the element exists
+function applyAnimation(selector, animationConfig) {
+  const elements = document.querySelectorAll(selector);
+  elements.forEach((element) => {
+    const duration = element.getAttribute("data-animation-duration") || 0.5;
+    const delay = element.getAttribute("data-animation-delay") || 0;
+    gsap.from(element, {
+      ...animationConfig,
+      duration: parseFloat(duration),
+      delay: parseFloat(delay),
+      scrollTrigger: {
+        trigger: element,
+        start: "top 80%",
+        toggleActions: "play none none none", // Ensure the animation triggers only once
+      },
+    });
+  });
+}
+
+// Animation From Bottom to Top
+applyAnimation(".animate-bottom-to-top", {
+  y: 50,
+  opacity: 0,
+});
+
+// Animation From Top to Bottom
+applyAnimation(".animate-top-to-bottom", {
+  opacity: 0,
+  y: -50,
+});
+
+// Animation From Left to Right
+applyAnimation(".animate-left-to-right", {
+  opacity: 0,
+  x: -50,
+});
+
+// Animation From Right to Left
+applyAnimation(".animate-right-to-left", {
+  opacity: 0,
+  x: 50,
+});
+
+// Animation From Right to Left
+applyAnimation(".animate-zoom-in", {
+  opacity: 0,
+  scale: 0.2,
+});
+
+// Animation From Right to Left
+applyAnimation(".animate-fade", {
+  opacity: 0,
+});
+
+// Slide-out preloader
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    gsap.to("#preloader", {
+      y: "-100%",
+      duration: 0.2,
+      ease: "power2.inOut",
+      opacity: 0,
+      onComplete: () => {
+        document.querySelector(".main-wrapper").style.display = "block";
+      },
+    });
+  }, 500);
+});
+
+// Vertical Progress Bar
+if (document.querySelector(".vertical-progress-bar ")) {
+  gsap.to(".vertical-progress-bar", {
+    height: "100%",
+    ease: "none",
+    scrollTrigger: {
+      trigger: ".about-process-area ",
+      start: "top 80%",
+      end: "bottom 20%",
+      scrub: true,
+    },
+  });
+
+  const steps = document.querySelectorAll(".step");
+  const blocks = document.querySelectorAll(".about-process-block");
+
+  // Activate steps when blocks come into view
+  blocks.forEach((block, index) => {
+    ScrollTrigger.create({
+      trigger: block,
+      start: "top center",
+      onEnter: () => steps[index].classList.add("active"),
+      onLeaveBack: () => steps[index].classList.remove("active"),
+    });
+  });
+}
