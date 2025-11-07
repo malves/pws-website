@@ -1357,7 +1357,7 @@ html {
    Contact Form Section
    =================================== */
 .contact-form-section {
-    padding: 80px 0;
+    padding: 50px 0;
     background: var(--color-off-white);
 }
 
@@ -1520,7 +1520,7 @@ html {
 /* Responsive */
 @media (max-width: 768px) {
     .contact-form-section {
-        padding: 60px 0;
+        padding: 40px 0;
     }
     
     .contact-form-wrapper {
